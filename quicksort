@@ -3,7 +3,7 @@ using namespace std;
 void quicksortarray(int* a,int n)
 {
 	int pi=n-1;
-	if(n==1)
+	if((n==1)||(n==0))
 		return;
 	int i=0,j=0;
 	int p=a[pi];
