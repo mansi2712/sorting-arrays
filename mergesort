@@ -1,0 +1,56 @@
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+int* merge(int* a1,int *a2,int n,int m)
+{
+	int *a3=new int[n+m];
+	int j=0,k=0;
+	for(int i=0;i<n+m; )
+	{
+		if((j<n)&&(k<m))
+		{
+			if(a1[j]<a2[k])
+				a3[i++]=a1[j++];
+			else if(a1[j]>a2[k])
+				a3[i++]=a2[k++];
+			else
+			{
+				a3[i]=a1[j++];
+				a3[i+1]=a2[k++];
+				i=i+2;
+			}
+		}
+		else if(j<n)
+			a3[i++]=a1[j++];
+		else
+			a3[i++]=a2[k++];
+	}
+	return a3;	
+}
+int* mergesort(int* a1,int n)
+{
+	if(n<=1)
+		return a1;
+	int mid=n/2;
+	int *a2=mergesort(a1,mid);
+	int *a3=mergesort(a1+mid,n-mid);
+	a1=merge(a2,a3,mid,n-mid);
+}
+int main()
+{
+	int n,m;
+	cin>>n;
+	int *a1=new int[n];
+//	int *a2=new int[m];
+	for(int i=0;i<n;i++)
+		cin>>a1[i];
+//	for(int i=0;i<m;i++)
+//		cin>>a2[i];
+	int *a3=mergesort(a1,n);
+	for(int i=0;i<n+m;i++)
+		cout<<a3[i]<<" ";	
+	delete []a1;
+//	delete []a2;
+	delete []a3;
+	return 0;
+}
